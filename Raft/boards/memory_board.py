@@ -14,7 +14,7 @@ class MemoryBoard(Board):
                              key=lambda a: a.timestamp, reverse=True)
 
     def get_message(self):
-        if(len(self._board) > 0):
+        if (len(self._board) > 0):
             return self._board.pop()
         else:
             return None

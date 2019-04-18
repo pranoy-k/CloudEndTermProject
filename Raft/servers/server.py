@@ -1,7 +1,7 @@
 import zmq
 import threading
 
-
+# (1, state, [], board, [self.oserver])
 class Server(object):
 
     def __init__(self, name, state, log, messageBoard, neighbors):
@@ -30,7 +30,7 @@ class Server(object):
 
     def send_message_response(self, message):
         n = [n for n in self._neighbors if n._name == message.receiver]
-        if(len(n) > 0):
+        if (len(n) > 0):
             n[0].post_message(message)
 
     def post_message(self, message):
@@ -67,7 +67,7 @@ class ZeroMQServer(Server):
                 while True:
                     message = self._messageBoard.get_message()
                     if not message:
-                        continue # sleep wait?
+                        continue  # sleep wait?
                     socket.send(message)
 
         self.subscribeThread = SubscribeThread()

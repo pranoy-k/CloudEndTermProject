@@ -18,22 +18,22 @@ class State(object):
         """
         _type = message.type
 
-        if(message.term > self._server._currentTerm):
+        if (message.term > self._server._currentTerm):
             self._server._currentTerm = message.term
         # Is the messages.term < ours? If so we need to tell
         #   them this so they don't get left behind.
-        elif(message.term < self._server._currentTerm):
+        elif (message.term < self._server._currentTerm):
             self._send_response_message(message, yes=False)
             return self, None
 
-        if(_type == BaseMessage.AppendEntries):
+        if (_type == BaseMessage.AppendEntries):
             return self.on_append_entries(message)
-        elif(_type == BaseMessage.RequestVote):
+        elif (_type == BaseMessage.RequestVote):
             a = self.on_vote_request(message)
             return a
-        elif(_type == BaseMessage.RequestVoteResponse):
+        elif (_type == BaseMessage.RequestVoteResponse):
             return self.on_vote_received(message)
-        elif(_type == BaseMessage.Response):
+        elif (_type == BaseMessage.Response):
             return self.on_response_received(message)
 
     def on_leader_timeout(self, message):

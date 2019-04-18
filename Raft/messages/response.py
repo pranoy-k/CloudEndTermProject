@@ -2,7 +2,6 @@ from Raft.messages.base import BaseMessage
 
 
 class ResponseMessage(BaseMessage):
-
     _type = BaseMessage.Response
 
     def __init__(self, sender, receiver, term, data):

@@ -1,4 +1,3 @@
-
 class Board(object):
 
     def set_owner(self, owner):

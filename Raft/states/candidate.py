@@ -17,7 +17,7 @@ class Candidate(Voter):
         if message.sender not in self._votes:
             self._votes[message.sender] = message
 
-            if(len(self._votes.keys()) > (self._server._total_nodes - 1) / 2):
+            if (len(self._votes.keys()) > (self._server._total_nodes - 1) / 2):
                 leader = Leader()
                 leader.set_server(self._server)
 
