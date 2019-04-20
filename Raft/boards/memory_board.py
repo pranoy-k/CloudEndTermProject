@@ -8,6 +8,7 @@ class MemoryBoard(Board):
         self._board = []
 
     def post_message(self, message):
+        # print("Post Messages!!!!")
         self._board.append(message)
 
         self._board = sorted(self._board,

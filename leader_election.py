@@ -14,41 +14,67 @@ from threading import Thread
 
 term = 0
 
+
+def checkMesages():
+    while(True):
+        time.sleep(0.0001)
+        for name in range(len(followers)):
+            while(True):
+                message = followers[name]._messageBoard.get_message()
+
+                if message == None:
+                    break
+                else:
+                    # print("Got message")
+                    followers[name]._state.on_message(message)
+
+
 def serverFunction(name):
     print(name)
     global followers
     server = followers[name]
     # if isinstance(server._state) == Follower:
-    print "Started server with name ", name
+    print("Started server with name ", name)
     # elif server._serverState == resumeState:
-    #     print "Resumed server with name ", name
-    #     print server._commitIndex
-    #     print server._log
+    #     print("Resumed server with name ", name)
+    #     print(server._commitIndex)
+    #     print(server._log)
     #     server._state = Follower()
     #     server._state.set_server(server)
     #     server._state.on_resume()
     #     server._serverState = followerState
 
+    # count =0
     while(True):
-        # if isinstance(server._state) == Leader:
-        #     if time.time() >= server._state._timeoutTime:
-        #         server._state._send_heart_beat()
+        if type(server._state) == Leader:
+            print("Server is now leader: ", server._name)
+            # if time.time() >= server._state._timeoutTime:
+            #     server._state._send_heart_beat()
 
-        if type(server._state) == Candidate and time.time() >= server._state._timeoutTime:
-            server._state = Follower()
-            server._state.set_server(server)
+        # if type(server._state) == Candidate and time.time() >= server._state._timeoutTime:
+        #     server._state = Follower()
+        #     server._state.set_server(server)
+        #     count += 1
 
-        if type(server._state) == Follower and term >= 1:
+        if type(server._state) == Follower:
+            # print("time.time: ", time.time()/1000000)
+            # print("server._state._timeoutTime: ",
+            #       server._state._timeoutTime/1000000)
             if time.time() >= server._state._timeoutTime:
-                print server._name, "finds that the leader is dead"
+                # print("server._state._timeoutTime: ", server._state._timeoutTime/1000000)
+                print("server ", server._name, "finds that the leader is dead")
                 server._state = Candidate()
+                server._state.set_server(server)
+            # count += 1
+        # if count == 50:
+        #     break
 
         time.sleep(0.0001)
         # if server._serverState == deadState:
-        #     print "Killed server with name", name
+        #     print("Killed server with name", name)
         #     server._state = Follower()
         #     server._state.set_server(server)
-        #     print server._commitIndex
+        #     print(server._commitIndex)
         #     return
         #
         # if server._serverState == candidateState and type(server._state) != Candidate:
@@ -60,10 +86,9 @@ def serverFunction(name):
         #         server._state.set_server(server)
 
 
-
-## Create Servers
+# Create Servers
 followers = []
-for i in range(0, 5):
+for i in range(0, 2):
     board = MemoryBoard()
     state = Follower()
     server = Server(i, state, [], board, [])
@@ -75,3 +100,6 @@ for i in range(0, 5):
     followers.append(server)
     thread = Thread(target=serverFunction, args=(i,))
     thread.start()
+
+thread = Thread(target=checkMesages, args=())
+thread.start()

@@ -2,6 +2,8 @@ import zmq
 import threading
 
 # (1, state, [], board, [self.oserver])
+
+
 class Server(object):
 
     def __init__(self, name, state, log, messageBoard, neighbors):
@@ -24,6 +26,7 @@ class Server(object):
         self._messageBoard.set_owner(self)
 
     def send_message(self, message):
+        # print("Sending Messages!!!")
         for n in self._neighbors:
             message._receiver = n._name
             n.post_message(message)
@@ -44,7 +47,8 @@ class Server(object):
 
 class ZeroMQServer(Server):
     def __init__(self, name, state, log, messageBoard, neighbors, port=6666):
-        super(ZeroMQServer, self).__init__(name, state, log, messageBoard, neighbors)
+        super(ZeroMQServer, self).__init__(
+            name, state, log, messageBoard, neighbors)
         self._port = 6666
 
         class SubscribeThread(threading.Thread):

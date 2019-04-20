@@ -16,6 +16,7 @@ class State(object):
         that this state reacts to.
 
         """
+        print(self._server._name, "On message!")
         _type = message.type
 
         if (message.term > self._server._currentTerm):
@@ -32,7 +33,9 @@ class State(object):
             a = self.on_vote_request(message)
             return a
         elif (_type == BaseMessage.RequestVoteResponse):
-            return self.on_vote_received(message)
+            a = self.on_vote_received(message)
+            # print("RequestVoteResponse", a._server._name)
+            return a
         elif (_type == BaseMessage.Response):
             return self.on_response_received(message)
 
@@ -59,6 +62,7 @@ class State(object):
 
     def _nextTimeout(self):
         self._currentTime = time.time()
+        print("NEXT TIMEOUT")
         return self._currentTime + random.randrange(self._timeout,
                                                     2 * self._timeout)
 

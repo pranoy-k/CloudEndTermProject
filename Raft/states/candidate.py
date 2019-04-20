@@ -14,18 +14,21 @@ class Candidate(Voter):
         return self, None
 
     def on_vote_received(self, message):
+        # print("on vote received")
         if message.sender not in self._votes:
             self._votes[message.sender] = message
-
+            # print("message_sender: ", message.sender)
             if (len(self._votes.keys()) > (self._server._total_nodes - 1) / 2):
                 leader = Leader()
+                # self._server._state = Leader()
                 leader.set_server(self._server)
-
+                print(leader._server._name, "Leader got selected.")
                 return leader, None
         return self, None
 
     def _start_election(self):
         self._server._currentTerm += 1
+        print("Start Election!!!!")
         election = RequestVoteMessage(
             self._server._name,
             None,

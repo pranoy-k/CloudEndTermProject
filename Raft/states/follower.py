@@ -3,19 +3,22 @@ from Raft.states.voter import Voter
 
 class Follower(Voter):
 
-    def __init__(self, timeout=500):
-        Voter.__init__(self)
-        self._timeout = timeout
+    def __init__(self):  # time is in sec NOT millisec. 500 origin
+        Voter.__init__(self, timeout=5)
+        # self._timeout = timeout
         self._timeoutTime = self._nextTimeout()
+        print("TIME OUT Initial: ", self._timeoutTime/1000000)
 
     def on_append_entries(self, message):
         self._timeoutTime = self._nextTimeout()
+        # print("get timeout")
 
         if (message.term < self._server._currentTerm):
             self._send_response_message(message, yes=False)
             return self, None
 
         if (message.data != {}):
+            # print("##########################")
             log = self._server._log
             data = message.data
 
