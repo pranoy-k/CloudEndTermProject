@@ -1,6 +1,6 @@
 import unittest
 
-from Raft.boards.memory_board import MemoryBoard
+# from Raft.boards.memory_board import MemoryBoard
 from Raft.messages.append_entries import AppendEntriesMessage
 from Raft.messages.request_vote import RequestVoteMessage
 from Raft.servers.server import Server
@@ -10,14 +10,14 @@ from Raft.states.follower import Follower
 class TestFollowerServer(unittest.TestCase):
 
     def setUp(self):
-        board = MemoryBoard()
+        # board = MemoryBoard()
         state = Follower()
         ## name, state, log, messageBoard, neighbors
-        self.oserver = Server(0, state, [], board, [])
+        self.oserver = Server(0, state, [], [])
 
-        board = MemoryBoard()
+        # board = MemoryBoard()
         state = Follower()
-        self.server = Server(1, state, [], board, [self.oserver])
+        self.server = Server(1, state, [], [self.oserver])
 
     ## Heartbeat Message Processing
     def test_follower_server_on_message(self):
@@ -30,7 +30,7 @@ class TestFollowerServer(unittest.TestCase):
 
         self.server.on_message(msg)
 
-        self.assertEquals(False, self.oserver._messageBoard.get_message().data["response"])
+        self.assertEquals(False, self.oserver.get_message().data["response"])
     def test_follower_server_on_receive_message_with_greater_term(self):
         msg = AppendEntriesMessage(0, 1, 2, {})
 
@@ -49,7 +49,7 @@ class TestFollowerServer(unittest.TestCase):
 
         self.server.on_message(msg)
 
-        self.assertEquals(False, self.oserver._messageBoard.get_message().data["response"])
+        self.assertEquals(False, self.oserver.get_message().data["response"])
         self.assertEquals([], self.server._log)
     def test_follower_server_on_receive_message_where_log_contains_conflicting_entry_at_new_index(self):
         self.server._log.append({"term": 1, "value": 0})
@@ -83,7 +83,7 @@ class TestFollowerServer(unittest.TestCase):
         self.server.on_message(msg)
 
         self.assertEquals(0, self.server._state._last_vote)
-        self.assertEquals(True, self.oserver._messageBoard.get_message().data["response"])
+        self.assertEquals(True, self.oserver.get_message().data["response"])
     def test_follower_server_on_receive_vote_request_after_sending_a_vote(self):
         msg = RequestVoteMessage(0, 1, 2, {"lastLogIndex": 0, "lastLogTerm": 0, "entries": []})
 

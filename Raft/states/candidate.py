@@ -1,9 +1,16 @@
-from Raft.states.voter import Voter
+# from Raft.states.voter import Voter
 from Raft.states.leader import Leader
 from Raft.messages.request_vote import RequestVoteMessage
+import time
+import random
+from Raft.messages.request_vote import RequestVoteResponseMessage
+from Raft.messages.base import BaseMessage
+from Raft.messages.response import ResponseMessage
 
-
-class Candidate(Voter):
+class Candidate(object):
+    def __init__(self,timeout = 5):  # time is in sec NOT millisec. 500 origin
+        self._last_vote = None
+        self._timeout = timeout
 
     def set_server(self, server):
         self._server = server
@@ -40,3 +47,37 @@ class Candidate(Voter):
 
         self._server.send_message(election)
         self._last_vote = self._server._name
+    def on_message(self, message):
+            """This method is called when a message is received,
+            and calls one of the other corrosponding methods
+            that this state reacts to.
+
+            """
+            print(self._server._name, "On message!")
+            _type = message.type
+
+            if (message.term > self._server._currentTerm):
+                self._server._currentTerm = message.term
+            # Is the messages.term < ours? If so we need to tell
+            #   them this so they don't get left behind.
+            elif (message.term < self._server._currentTerm):
+                self._send_response_message(message, yes=False)
+                return self, None
+
+            if (_type == BaseMessage.AppendEntries):
+                return self.on_append_entries(message)
+            elif (_type == BaseMessage.RequestVote):
+                a = self.on_vote_request(message)
+                return a
+            elif (_type == BaseMessage.RequestVoteResponse):
+                a = self.on_vote_received(message)
+                # print("RequestVoteResponse", a._server._name)
+                return a
+            elif (_type == BaseMessage.Response):
+                return self.on_response_received(message)
+
+    def _nextTimeout(self):
+        self._currentTime = time.time()
+        print("NEXT TIMEOUT")
+        return self._currentTime + random.randrange(self._timeout,
+                                                    2 * self._timeout)

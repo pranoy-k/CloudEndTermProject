@@ -1,9 +1,12 @@
 from collections import defaultdict
-from Raft.states.state import State
+# from Raft.states.state import State
 from Raft.messages.append_entries import AppendEntriesMessage
-
-
-class Leader(State):
+import time
+import random
+from Raft.messages.base import BaseMessage
+from Raft.messages.response import ResponseMessage
+from Raft.messages.request_vote import RequestVoteResponseMessage
+class Leader(object):
 
     def __init__(self):
         self._nextIndexes = defaultdict(int)
@@ -65,3 +68,46 @@ class Leader(State):
                 "leaderCommit": self._server._commitIndex,
             })
         self._server.send_message(message)
+    
+    def on_message(self, message):
+        """This method is called when a message is received,
+        and calls one of the other corrosponding methods
+        that this state reacts to.
+
+        """
+        print(self._server._name, "On message!")
+        _type = message.type
+
+        if (message.term > self._server._currentTerm):
+            self._server._currentTerm = message.term
+        # Is the messages.term < ours? If so we need to tell
+        #   them this so they don't get left behind.
+        elif (message.term < self._server._currentTerm):
+            self._send_response_message(message, yes=False)
+            return self, None
+
+        if (_type == BaseMessage.AppendEntries):
+            return self.on_append_entries(message)
+        elif (_type == BaseMessage.RequestVote):
+            a = self.on_vote_request(message)
+            return a
+        elif (_type == BaseMessage.RequestVoteResponse):
+            a = self.on_vote_received(message)
+            # print("RequestVoteResponse", a._server._name)
+            return a
+        elif (_type == BaseMessage.Response):
+            return self.on_response_received(message)
+
+    def _send_response_message(self, msg, yes=True):
+        response = ResponseMessage(self._server._name, msg.sender, msg.term, {
+            "response": yes,
+            "currentTerm": self._server._currentTerm,
+        })
+        self._server.send_message_response(response)
+
+    def _nextTimeout(self):
+        self._currentTime = time.time()
+        print("NEXT TIMEOUT")
+        return self._currentTime + random.randrange(self._timeout,
+                                                    2 * self._timeout)
+    

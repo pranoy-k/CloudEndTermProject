@@ -1,7 +1,7 @@
 import unittest
 import time
 
-from Raft.boards.memory_board import MemoryBoard
+# from Raft.boards.memory_board import MemoryBoard
 from Raft.messages.append_entries import AppendEntriesMessage
 from Raft.messages.request_vote import RequestVoteMessage
 from Raft.servers.server import Server
@@ -17,10 +17,11 @@ term = 0
 
 def checkMesages():
     while(True):
+        print("x")
         time.sleep(0.0001)
         for name in range(len(followers)):
             while(True):
-                message = followers[name]._messageBoard.get_message()
+                message = followers[name].get_message()
 
                 if message == None:
                     break
@@ -46,6 +47,9 @@ def serverFunction(name):
 
     # count =0
     while(True):
+        num = 0
+        
+        print(name)
         if type(server._state) == Leader:
             print("Server is now leader: ", server._name)
             # if time.time() >= server._state._timeoutTime:
@@ -89,9 +93,9 @@ def serverFunction(name):
 # Create Servers
 followers = []
 for i in range(0, 2):
-    board = MemoryBoard()
+    # board = MemoryBoard()
     state = Follower()
-    server = Server(i, state, [], board, [])
+    server = Server(i, state, [], [])
 
     for follower in followers:
         follower._neighbors.append(server)

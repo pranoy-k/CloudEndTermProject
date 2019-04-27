@@ -1,13 +1,20 @@
-from Raft.states.voter import Voter
+# from Raft.states.voter import Voter
+import time
+import random
+from Raft.messages.request_vote import RequestVoteResponseMessage
+from Raft.messages.base import BaseMessage
+from Raft.messages.response import ResponseMessage
 
+class Follower(object):
 
-class Follower(Voter):
-
-    def __init__(self):  # time is in sec NOT millisec. 500 origin
-        Voter.__init__(self, timeout=5)
+    def __init__(self,timeout = 5):  # time is in sec NOT millisec. 500 origin
+        self._last_vote = None
+        self._timeout = timeout
         # self._timeout = timeout
         self._timeoutTime = self._nextTimeout()
         print("TIME OUT Initial: ", self._timeoutTime/1000000)
+    def set_server(self, server):
+        self._server = server
 
     def on_append_entries(self, message):
         self._timeoutTime = self._nextTimeout()
@@ -92,3 +99,66 @@ class Follower(Voter):
             return self, None
         else:
             return self, None
+
+    def on_message(self, message):
+        """This method is called when a message is received,
+        and calls one of the other corrosponding methods
+        that this state reacts to.
+
+        """
+        print(self._server._name, "On message!")
+        _type = message.type
+
+        if (message.term > self._server._currentTerm):
+            self._server._currentTerm = message.term
+        # Is the messages.term < ours? If so we need to tell
+        #   them this so they don't get left behind.
+        elif (message.term < self._server._currentTerm):
+            self._send_response_message(message, yes=False)
+            return self, None
+
+        if (_type == BaseMessage.AppendEntries):
+            return self.on_append_entries(message)
+        elif (_type == BaseMessage.RequestVote):
+            a = self.on_vote_request(message)
+            return a
+        elif (_type == BaseMessage.RequestVoteResponse):
+            a = self.on_vote_received(message)
+            # print("RequestVoteResponse", a._server._name)
+            return a
+        elif (_type == BaseMessage.Response):
+            return self.on_response_received(message)
+
+    def _nextTimeout(self):
+        self._currentTime = time.time()
+        print("NEXT TIMEOUT")
+        return self._currentTime + random.randrange(self._timeout,
+                                                    2 * self._timeout)
+
+    def _send_response_message(self, msg, yes=True):
+        response = ResponseMessage(self._server._name, msg.sender, msg.term, {
+            "response": yes,
+            "currentTerm": self._server._currentTerm,
+        })
+        self._server.send_message_response(response)
+
+    def on_vote_request(self, message):
+        self._timeoutTime = self._nextTimeout()
+        print("TIME OUT: ", self._timeoutTime/1000000)
+        if (self._last_vote is None and
+                message.data["lastLogIndex"] >= self._server._lastLogIndex):
+            self._last_vote = message.sender
+            self._send_vote_response_message(message)
+        else:
+            self._send_vote_response_message(message, yes=False)
+
+        return self, None
+
+    def _send_vote_response_message(self, msg, yes=True):
+        voteResponse = RequestVoteResponseMessage(
+            self._server._name,
+            msg.sender,
+            msg.term,
+            {"response": yes})
+        self._server.send_message_response(voteResponse)
+

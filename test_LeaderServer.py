@@ -1,6 +1,6 @@
 import unittest
 
-from Raft.boards.memory_board import MemoryBoard
+# from Raft.boards.memory_board import MemoryBoard
 from Raft.messages.append_entries import AppendEntriesMessage
 from Raft.messages.request_vote import RequestVoteMessage
 from Raft.servers.server import Server
@@ -15,14 +15,14 @@ class TestLeaderServer(unittest.TestCase):
 
         followers = []
         for i in range(1, 4):
-            board = MemoryBoard()
+            # board = MemoryBoard()
             state = Follower()
-            followers.append(Server(i, state, [], board, []))
+            followers.append(Server(i, state, [], []))
 
-        board = MemoryBoard()
+        
         state = Leader()
 
-        self.leader = Server(0, state, [], board, followers)
+        self.leader = Server(0, state, [], followers)
 
         for i in followers:
             i._neighbors.append(self.leader)
@@ -30,9 +30,9 @@ class TestLeaderServer(unittest.TestCase):
     def _perform_hearbeat(self):
         self.leader._state._send_heart_beat()
         for i in self.leader._neighbors:
-            i.on_message(i._messageBoard.get_message())
+            i.on_message(i.get_message())
 
-        for i in self.leader._messageBoard._board:
+        for i in self.leader._board:
             self.leader.on_message(i)
 
     def test_leader_server_sends_heartbeat_to_all_neighbors(self):
@@ -53,7 +53,7 @@ class TestLeaderServer(unittest.TestCase):
         self.leader.send_message(msg)
 
         for i in self.leader._neighbors:
-            i.on_message(i._messageBoard.get_message())
+            i.on_message(i.get_message())
 
         for i in self.leader._neighbors:
             self.assertEquals([{"term": 1, "value": 100}], i._log)
@@ -76,7 +76,7 @@ class TestLeaderServer(unittest.TestCase):
         self.leader.send_message(msg)
 
         for i in self.leader._neighbors:
-            i.on_message(i._messageBoard.get_message())
+            i.on_message(i.get_message())
 
         for i in self.leader._neighbors:
             self.assertEquals([{"term": 1, "value": 100}], i._log)

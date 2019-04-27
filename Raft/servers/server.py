@@ -6,14 +6,14 @@ import threading
 
 class Server(object):
 
-    def __init__(self, name, state, log, messageBoard, neighbors):
+    def __init__(self, name, state, log, neighbors):
         self._name = name
         self._state = state
         self._log = log
-        self._messageBoard = messageBoard
+        # self._messageBoard = messageBoard
         self._neighbors = neighbors
         self._total_nodes = 0
-
+        self._board = []
         self._commitIndex = 0
         self._currentTerm = 0
 
@@ -23,8 +23,19 @@ class Server(object):
         self._lastLogTerm = None
 
         self._state.set_server(self)
-        self._messageBoard.set_owner(self)
+        # self._messageBoard.set_owner(self)
+    def post_message(self, message):
+        # print("Post Messages!!!!")
+        self._board.append(message)
 
+        self._board = sorted(self._board,
+                                key=lambda a: a.timestamp, reverse=True)
+
+    def get_message(self):
+        if (len(self._board) > 0):
+            return self._board.pop()
+        else:
+            return None
     def send_message(self, message):
         # print("Sending Messages!!!")
         for n in self._neighbors:
@@ -36,8 +47,8 @@ class Server(object):
         if (len(n) > 0):
             n[0].post_message(message)
 
-    def post_message(self, message):
-        self._messageBoard.post_message(message)
+    # def post_message(self, message):
+    #     self.board.post_message(message)
 
     def on_message(self, message):
         state, response = self._state.on_message(message)
@@ -45,39 +56,39 @@ class Server(object):
         self._state = state
 
 
-class ZeroMQServer(Server):
-    def __init__(self, name, state, log, messageBoard, neighbors, port=6666):
-        super(ZeroMQServer, self).__init__(
-            name, state, log, messageBoard, neighbors)
-        self._port = 6666
+# class ZeroMQServer(Server):
+#     def __init__(self, name, state, log, messageBoard, neighbors, port=6666):
+#         super(ZeroMQServer, self).__init__(
+#             name, state, log, messageBoard, neighbors)
+#         self._port = 6666
 
-        class SubscribeThread(threading.Thread):
-            def run(thread):
-                context = zmq.Context()
-                socket = context.socket(zmq.SUB)
-                for n in neighbors:
-                    socket.connect("tcp://%s:%d" % (n._name, n._port))
+#         class SubscribeThread(threading.Thread):
+#             def run(thread):
+#                 context = zmq.Context()
+#                 socket = context.socket(zmq.SUB)
+#                 for n in neighbors:
+#                     socket.connect("tcp://%s:%d" % (n._name, n._port))
 
-                while True:
-                    message = socket.recv()
-                    self.on_message(message)
+#                 while True:
+#                     message = socket.recv()
+#                     self.on_message(message)
 
-        class PublishThread(threading.Thread):
-            def run(thread):
-                context = zmq.Context()
-                socket = context.socket(zmq.PUB)
-                socket.bind("tcp://*:%d" % self._port)
+#         class PublishThread(threading.Thread):
+#             def run(thread):
+#                 context = zmq.Context()
+#                 socket = context.socket(zmq.PUB)
+#                 socket.bind("tcp://*:%d" % self._port)
 
-                while True:
-                    message = self._messageBoard.get_message()
-                    if not message:
-                        continue  # sleep wait?
-                    socket.send(message)
+#                 while True:
+#                     message = self._messageBoard.get_message()
+#                     if not message:
+#                         continue  # sleep wait?
+#                     socket.send(message)
 
-        self.subscribeThread = SubscribeThread()
-        self.publishThread = PublishThread()
+#         self.subscribeThread = SubscribeThread()
+#         self.publishThread = PublishThread()
 
-        self.subscribeThread.daemon = True
-        self.subscribeThread.start()
-        self.publishThread.daemon = True
-        self.publishThread.start()
+#         self.subscribeThread.daemon = True
+#         self.subscribeThread.start()
+#         self.publishThread.daemon = True
+#         self.publishThread.start()
