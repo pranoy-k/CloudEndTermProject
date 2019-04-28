@@ -60,21 +60,21 @@ class Candidate(object):
                 self._server._currentTerm = message.term
             # Is the messages.term < ours? If so we need to tell
             #   them this so they don't get left behind.
-            elif (message.term < self._server._currentTerm):
-                self._send_response_message(message, yes=False)
-                return self, None
+            # elif (message.term < self._server._currentTerm):
+            #     self._send_response_message(message, yes=False)
+            #     return self, None
 
-            if (_type == BaseMessage.AppendEntries):
-                return self.on_append_entries(message)
-            elif (_type == BaseMessage.RequestVote):
-                a = self.on_vote_request(message)
-                return a
-            elif (_type == BaseMessage.RequestVoteResponse):
+            # if (_type == BaseMessage.AppendEntries):
+            #     return self.on_append_entries(message)
+            # elif (_type == BaseMessage.RequestVote):
+            #     a = self.on_vote_request(message)
+            #     return a
+            if (_type == BaseMessage.RequestVoteResponse):
                 a = self.on_vote_received(message)
                 # print("RequestVoteResponse", a._server._name)
                 return a
-            elif (_type == BaseMessage.Response):
-                return self.on_response_received(message)
+            # elif (_type == BaseMessage.Response):
+            #     return self.on_response_received(message)
 
     def _nextTimeout(self):
         self._currentTime = time.time()

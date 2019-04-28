@@ -122,12 +122,12 @@ class Follower(object):
         elif (_type == BaseMessage.RequestVote):
             a = self.on_vote_request(message)
             return a
-        elif (_type == BaseMessage.RequestVoteResponse):
-            a = self.on_vote_received(message)
-            # print("RequestVoteResponse", a._server._name)
-            return a
-        elif (_type == BaseMessage.Response):
-            return self.on_response_received(message)
+        # elif (_type == BaseMessage.RequestVoteResponse):
+        #     a = self.on_vote_received(message)
+        #     # print("RequestVoteResponse", a._server._name)
+        #     return a
+        # elif (_type == BaseMessage.Response):
+        #     return self.on_response_received(message)
 
     def _nextTimeout(self):
         self._currentTime = time.time()

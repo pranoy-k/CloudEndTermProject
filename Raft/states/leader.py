@@ -82,28 +82,28 @@ class Leader(object):
             self._server._currentTerm = message.term
         # Is the messages.term < ours? If so we need to tell
         #   them this so they don't get left behind.
-        elif (message.term < self._server._currentTerm):
-            self._send_response_message(message, yes=False)
-            return self, None
+        # elif (message.term < self._server._currentTerm):
+        #     self._send_response_message(message, yes=False)
+        #     return self, None
 
-        if (_type == BaseMessage.AppendEntries):
-            return self.on_append_entries(message)
-        elif (_type == BaseMessage.RequestVote):
-            a = self.on_vote_request(message)
-            return a
-        elif (_type == BaseMessage.RequestVoteResponse):
-            a = self.on_vote_received(message)
+        # if (_type == BaseMessage.AppendEntries):
+        #     return self.on_append_entries(message)
+        # elif (_type == BaseMessage.RequestVote):
+        #     a = self.on_vote_request(message)
+        #     return a
+        # elif (_type == BaseMessage.RequestVoteResponse):
+        #     a = self.on_vote_received(message)
             # print("RequestVoteResponse", a._server._name)
-            return a
-        elif (_type == BaseMessage.Response):
+            # return a
+        if (_type == BaseMessage.Response):
             return self.on_response_received(message)
 
-    def _send_response_message(self, msg, yes=True):
-        response = ResponseMessage(self._server._name, msg.sender, msg.term, {
-            "response": yes,
-            "currentTerm": self._server._currentTerm,
-        })
-        self._server.send_message_response(response)
+    # def _send_response_message(self, msg, yes=True):
+    #     response = ResponseMessage(self._server._name, msg.sender, msg.term, {
+    #         "response": yes,
+    #         "currentTerm": self._server._currentTerm,
+    #     })
+    #     self._server.send_message_response(response)
 
     def _nextTimeout(self):
         self._currentTime = time.time()

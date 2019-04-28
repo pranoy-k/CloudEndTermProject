@@ -17,7 +17,7 @@ term = 0
 
 def checkMesages():
     while(True):
-        print("x")
+        # print("x")
         time.sleep(0.0001)
         for name in range(len(followers)):
             while(True):
@@ -31,7 +31,7 @@ def checkMesages():
 
 
 def serverFunction(name):
-    print(name)
+    # print(name)
     global followers
     server = followers[name]
     # if isinstance(server._state) == Follower:
@@ -49,7 +49,7 @@ def serverFunction(name):
     while(True):
         num = 0
         
-        print(name)
+        # print(name)
         if type(server._state) == Leader:
             print("Server is now leader: ", server._name)
             # if time.time() >= server._state._timeoutTime:
