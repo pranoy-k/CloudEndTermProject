@@ -34,6 +34,7 @@ def serverFunction(name):
     # print(name)
     global followers
     server = followers[name]
+    timeoutTime = time.time()+1
     # if isinstance(server._state) == Follower:
     print("Started server with name ", name)
     # elif server._serverState == resumeState:
@@ -51,9 +52,10 @@ def serverFunction(name):
         
         # print(name)
         if type(server._state) == Leader:
-            print("Server is now leader: ", server._name)
-            # if time.time() >= server._state._timeoutTime:
-            #     server._state._send_heart_beat()
+            # print("Server is now leader: ", server._name)
+            if time.time()-timeoutTime >0.5:
+                server._state._send_heart_beat()
+                timeoutTime = time.time()+0.5
 
         # if type(server._state) == Candidate and time.time() >= server._state._timeoutTime:
         #     server._state = Follower()
@@ -66,6 +68,7 @@ def serverFunction(name):
             #       server._state._timeoutTime/1000000)
             if time.time() >= server._state._timeoutTime:
                 # print("server._state._timeoutTime: ", server._state._timeoutTime/1000000)
+                print(time.time(),server._state._timeoutTime)
                 print("server ", server._name, "finds that the leader is dead")
                 server._state = Candidate()
                 server._state.set_server(server)

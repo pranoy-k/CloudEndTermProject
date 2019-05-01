@@ -27,8 +27,8 @@ class Candidate(object):
             # print("message_sender: ", message.sender)
             if (len(self._votes.keys()) > (self._server._total_nodes - 1) / 2):
                 leader = Leader()
-                # self._server._state = Leader()
                 leader.set_server(self._server)
+                self._server._state = leader
                 print(leader._server._name, "Leader got selected.")
                 return leader, None
         return self, None

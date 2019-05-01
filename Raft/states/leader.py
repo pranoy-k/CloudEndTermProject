@@ -67,6 +67,7 @@ class Leader(object):
                 "entries": [],
                 "leaderCommit": self._server._commitIndex,
             })
+        print("heartbeat sending")
         self._server.send_message(message)
     
     def on_message(self, message):
@@ -111,3 +112,9 @@ class Leader(object):
         return self._currentTime + random.randrange(self._timeout,
                                                     2 * self._timeout)
     
+    def _send_response_message(self, msg, yes=True):
+        response = ResponseMessage(self._server._name, msg.sender, msg.term, {
+            "response": yes,
+            "currentTerm": self._server._currentTerm,
+        })
+        self._server.send_message_response(response)
