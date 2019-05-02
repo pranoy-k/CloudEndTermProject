@@ -1,4 +1,4 @@
-# from Raft.states.voter import Voter
+from __future__ import print_function
 from Raft.states.leader import Leader
 from Raft.messages.request_vote import RequestVoteMessage
 import time
@@ -28,14 +28,16 @@ class Candidate(object):
             if (len(self._votes.keys()) > (self._server._total_nodes - 1) / 2):
                 leader = Leader()
                 leader.set_server(self._server)
+                print("Leader", leader._server._name, "got selected.")
                 self._server._state = leader
-                print(leader._server._name, "Leader got selected.")
+
                 return leader, None
         return self, None
 
     def _start_election(self):
         self._server._currentTerm += 1
-        print("The candidate " ,self._server._name , " starts the Election with term ", self._server._currentTerm,"!!! ")
+        print("Server", self._server._name, " times out and then becomes a candidate!!")
+        print("It starts the Election with term ", self._server._currentTerm,"!!! \n")
         election = RequestVoteMessage(
             self._server._name,
             None,
@@ -53,7 +55,6 @@ class Candidate(object):
             that this state reacts to.
 
             """
-            print(self._server._name, "On message!")
             _type = message.type
 
             if (message.term > self._server._currentTerm):

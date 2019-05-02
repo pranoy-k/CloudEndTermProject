@@ -1,3 +1,4 @@
+from __future__ import print_function
 from collections import defaultdict
 # from Raft.states.state import State
 from Raft.messages.append_entries import AppendEntriesMessage
@@ -15,7 +16,6 @@ class Leader(object):
     def set_server(self, server):
         self._server = server
         self._send_heart_beat()
-        print("set_server_leader: ", self._server._name)
         for n in self._server._neighbors:
             self._nextIndexes[n._name] = self._server._lastLogIndex + 1
             self._matchIndex[n._name] = 0
@@ -76,7 +76,6 @@ class Leader(object):
         that this state reacts to.
 
         """
-        print(self._server._name, "On message!")
         _type = message.type
 
         if (message.term > self._server._currentTerm):

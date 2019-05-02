@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddd4d78d-0392-4c49-b31c-78c1d5645dd1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/simpleRaft.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/simpleRaft.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/leader_election.py" beforeDir="false" afterPath="$PROJECT_DIR$/leader_election.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/yonarp.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Raft/states/candidate.py" beforeDir="false" afterPath="$PROJECT_DIR$/Raft/states/candidate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Raft/states/follower.py" beforeDir="false" afterPath="$PROJECT_DIR$/Raft/states/follower.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Raft/states/leader.py" beforeDir="false" afterPath="$PROJECT_DIR$/Raft/states/leader.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,13 +35,12 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/leader_election.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-269">
-              <caret line="17" selection-start-line="17" selection-end-line="17" selection-end-column="23" />
+            <state relative-caret-position="1">
+              <caret line="10" column="45" lean-forward="true" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="45" />
               <folding>
-                <element signature="e#0#37#0" expanded="true" />
                 <element signature="e#458#908#0" />
                 <element signature="e#827#3183#0" />
               </folding>
@@ -49,14 +48,53 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Raft/states/follower.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+            <state relative-caret-position="216">
+              <caret line="165" column="35" lean-forward="true" selection-start-line="165" selection-start-column="35" selection-end-line="165" selection-end-column="35" />
               <folding>
-                <element signature="e#0#37#0" expanded="true" />
+                <element signature="e#337#473#0" />
+                <element signature="e#525#546#0" />
+                <element signature="e#598#4436#0" />
+                <element signature="e#737#814#0" />
+                <element signature="e#861#4392#0" />
+                <element signature="e#1115#1337#0" />
+                <element signature="e#1115#1155#0" />
+                <element signature="e#1351#1394#0" />
+                <element signature="e#1518#1599#0" />
+                <element signature="e#1613#1673#0" />
+                <element signature="e#1910#2396#0" />
+                <element signature="e#1910#1970#0" />
+                <element signature="e#2409#2468#0" />
+                <element signature="e#2562#4312#0" />
+                <element signature="e#2562#2611#0" />
+                <element signature="e#2841#3556#0" />
+                <element signature="e#2841#2888#0" />
+                <element signature="e#3207#3275#0" />
+                <element signature="e#3599#4312#0" />
+                <element signature="e#3599#3652#0" />
+                <element signature="e#3885#4312#0" />
+                <element signature="e#3939#4011#0" />
+                <element signature="e#4450#5587#0" />
+                <element signature="e#4481#4638#1" />
+                <element signature="e#4834#4886#0" />
+                <element signature="e#5413#5490#0" />
+                <element signature="e#5249#5303#0" />
+                <element signature="e#5312#5362#0" />
+                <element signature="e#5638#5839#0" />
+                <element signature="e#5902#6119#0" />
+                <element signature="e#5971#6065#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Raft/messages/request_vote.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -64,8 +102,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Raft/states/candidate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="29" column="47" selection-start-line="29" selection-start-column="47" selection-end-line="29" selection-end-column="47" />
+            <state relative-caret-position="183">
+              <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -137,10 +175,10 @@
         <option value="$PROJECT_DIR$/test_FollowerServer.py" />
         <option value="$PROJECT_DIR$/test_CandidateServer.py" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
-        <option value="$PROJECT_DIR$/Raft/states/follower.py" />
         <option value="$PROJECT_DIR$/Raft/states/leader.py" />
         <option value="$PROJECT_DIR$/Raft/states/candidate.py" />
         <option value="$PROJECT_DIR$/leader_election.py" />
+        <option value="$PROJECT_DIR$/Raft/states/follower.py" />
       </list>
     </option>
   </component>
@@ -292,16 +330,23 @@
       <workItem from="1556811436370" duration="563000" />
       <workItem from="1556822448673" duration="1011000" />
       <workItem from="1556823564737" duration="428000" />
-      <workItem from="1556824012812" duration="6450000" />
+      <workItem from="1556824012812" duration="7252000" />
     </task>
+    <task id="LOCAL-00001" summary="Printing cleared">
+      <created>1556831177281</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1556831177281</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27626000" />
+    <option name="totallyTimeSpent" value="28428000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1408" height="877" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28257686" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -314,11 +359,11 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32939634" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" visible="true" weight="0.32939634" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.19422573" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.5104987" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.21784776" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.65485567" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -406,6 +451,10 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Printing cleared" />
+    <option name="LAST_COMMIT_MESSAGE" value="Printing cleared" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -469,13 +518,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Raft/messages/response.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Raft/messages/request_vote.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="16" lean-forward="true" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-        </state>
-      </provider>
     </entry>
     <entry file="uml://Python/Raft.states.follower.Follower">
       <provider selected="true" editor-type-id="UmlEditorProvider">
@@ -630,16 +672,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Raft/states/follower.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Raft/states/leader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
@@ -652,24 +684,70 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/leader_election.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1">
+          <caret line="10" column="45" lean-forward="true" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="45" />
+          <folding>
+            <element signature="e#458#908#0" />
+            <element signature="e#827#3183#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Raft/states/candidate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="29" column="47" selection-start-line="29" selection-start-column="47" selection-end-line="29" selection-end-column="47" />
+        <state relative-caret-position="183">
+          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/leader_election.py">
+    <entry file="file://$PROJECT_DIR$/Raft/messages/request_vote.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-269">
-          <caret line="17" selection-start-line="17" selection-end-line="17" selection-end-column="23" />
+        <state relative-caret-position="221">
+          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Raft/states/follower.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="165" column="35" lean-forward="true" selection-start-line="165" selection-start-column="35" selection-end-line="165" selection-end-column="35" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
-            <element signature="e#458#908#0" />
-            <element signature="e#827#3183#0" />
+            <element signature="e#337#473#0" />
+            <element signature="e#525#546#0" />
+            <element signature="e#598#4436#0" />
+            <element signature="e#737#814#0" />
+            <element signature="e#861#4392#0" />
+            <element signature="e#1115#1337#0" />
+            <element signature="e#1115#1155#0" />
+            <element signature="e#1351#1394#0" />
+            <element signature="e#1518#1599#0" />
+            <element signature="e#1613#1673#0" />
+            <element signature="e#1910#2396#0" />
+            <element signature="e#1910#1970#0" />
+            <element signature="e#2409#2468#0" />
+            <element signature="e#2562#4312#0" />
+            <element signature="e#2562#2611#0" />
+            <element signature="e#2841#3556#0" />
+            <element signature="e#2841#2888#0" />
+            <element signature="e#3207#3275#0" />
+            <element signature="e#3599#4312#0" />
+            <element signature="e#3599#3652#0" />
+            <element signature="e#3885#4312#0" />
+            <element signature="e#3939#4011#0" />
+            <element signature="e#4450#5587#0" />
+            <element signature="e#4481#4638#1" />
+            <element signature="e#4834#4886#0" />
+            <element signature="e#5413#5490#0" />
+            <element signature="e#5249#5303#0" />
+            <element signature="e#5312#5362#0" />
+            <element signature="e#5638#5839#0" />
+            <element signature="e#5902#6119#0" />
+            <element signature="e#5971#6065#0" />
           </folding>
         </state>
       </provider>

@@ -1,13 +1,15 @@
-# from Raft.states.voter import Voter
+from __future__ import print_function
 import time
 import random
 from Raft.messages.request_vote import RequestVoteResponseMessage
 from Raft.messages.base import BaseMessage
 from Raft.messages.response import ResponseMessage
 
+
+
 class Follower(object):
 
-    def __init__(self,timeout = 5):  # time is in sec NOT millisec. 500 origin
+    def __init__(self,timeout = 8):  # time is in sec NOT millisec. 500 origin
         self._last_vote = None
         self._timeout = timeout
         # self._timeout = timeout
@@ -18,7 +20,6 @@ class Follower(object):
 
     def on_append_entries(self, message):
         self._timeoutTime = self._nextTimeout()
-        # print("get timeout")
 
         if (message.term < self._server._currentTerm):
             self._send_response_message(message, yes=False)
@@ -106,8 +107,16 @@ class Follower(object):
         that this state reacts to.
 
         """
-        print(self._server._name, "On message!")
         _type = message.type
+
+        if _type == 0:
+            print("Server", self._server._name,"received", "AppendEntries")
+        elif _type == 1:
+            print("Server", self._server._name,"received", "RequestVote")
+        elif _type == 2:
+            print("Server", self._server._name,"received", "RequestVoteResponse")
+        elif _type == 3:
+            print("Server", self._server._name,"received", "Response")
 
         if (message.term > self._server._currentTerm):
             self._server._currentTerm = message.term
@@ -132,8 +141,7 @@ class Follower(object):
     def _nextTimeout(self):
         self._currentTime = time.time()
         # print("NEXT TIMEOUT")
-        return self._currentTime + random.randrange(self._timeout,
-                                                    2 * self._timeout)
+        return self._currentTime + random.randrange(self._timeout, 2 * self._timeout)
 
     def _send_response_message(self, msg, yes=True):
         response = ResponseMessage(self._server._name, msg.sender, msg.term, {
