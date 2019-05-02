@@ -35,7 +35,7 @@ class Candidate(object):
 
     def _start_election(self):
         self._server._currentTerm += 1
-        print("Start Election!!!!")
+        print("The candidate " ,self._server._name , " starts the Election with term ", self._server._currentTerm,"!!! ")
         election = RequestVoteMessage(
             self._server._name,
             None,
@@ -78,6 +78,6 @@ class Candidate(object):
 
     def _nextTimeout(self):
         self._currentTime = time.time()
-        print("NEXT TIMEOUT")
+        # print("NEXT TIMEOUT")
         return self._currentTime + random.randrange(self._timeout,
                                                     2 * self._timeout)

@@ -12,9 +12,6 @@ from Raft.states.leader import Leader
 
 from threading import Thread
 
-term = 0
-
-
 def checkMesages():
     while(True):
         # print("x")
@@ -95,7 +92,7 @@ def serverFunction(name):
 
 # Create Servers
 followers = []
-for i in range(0, 2):
+for i in range(0, 5):
     # board = MemoryBoard()
     state = Follower()
     server = Server(i, state, [], [])

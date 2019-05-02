@@ -67,7 +67,7 @@ class Leader(object):
                 "entries": [],
                 "leaderCommit": self._server._commitIndex,
             })
-        print("heartbeat sending")
+        print("server", self._server._name, "sending the heartbeat")
         self._server.send_message(message)
     
     def on_message(self, message):
@@ -108,7 +108,7 @@ class Leader(object):
 
     def _nextTimeout(self):
         self._currentTime = time.time()
-        print("NEXT TIMEOUT")
+        # print("NEXT TIMEOUT")
         return self._currentTime + random.randrange(self._timeout,
                                                     2 * self._timeout)
     

@@ -12,7 +12,7 @@ class Follower(object):
         self._timeout = timeout
         # self._timeout = timeout
         self._timeoutTime = self._nextTimeout()
-        print("TIME OUT Initial: ", self._timeoutTime/1000000)
+        
     def set_server(self, server):
         self._server = server
 
@@ -131,7 +131,7 @@ class Follower(object):
 
     def _nextTimeout(self):
         self._currentTime = time.time()
-        print("NEXT TIMEOUT")
+        # print("NEXT TIMEOUT")
         return self._currentTime + random.randrange(self._timeout,
                                                     2 * self._timeout)
 
@@ -144,7 +144,7 @@ class Follower(object):
 
     def on_vote_request(self, message):
         self._timeoutTime = self._nextTimeout()
-        print("TIME OUT: ", self._timeoutTime/1000000)
+        # print("TIME OUT: ", self._timeoutTime/1000000)
         if (self._last_vote is None and
                 message.data["lastLogIndex"] >= self._server._lastLogIndex):
             self._last_vote = message.sender
