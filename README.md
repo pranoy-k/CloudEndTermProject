@@ -19,6 +19,10 @@ It consists of three directories
   - LeaderElection.py
   - LogReplication.py
     - Each request made by the client is stored in the Logs of the Leader. This log is then replicated to other nodes(Followers).
+    - A log entry contains: 
+      - Command specified by the client to execute
+      - Index to identify the position of entry in the log of the node.
+      - Term Number to ascertain the time of entry of the command.
 
 ## Dependencies
 
