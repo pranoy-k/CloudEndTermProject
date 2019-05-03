@@ -5,6 +5,7 @@ import random
 import threading
 
 from Raft.states.leader import Leader
+from Raft.states.follower import Follower
 from Raft.messages.request_vote import RequestVoteMessage
 from Raft.messages.request_vote import RequestVoteResponseMessage
 from Raft.messages.base import BaseMessage
@@ -25,7 +26,7 @@ class Candidate(object):
 
     def on_vote_received(self, message):
         # print("on vote received")
-        if message.sender not in self._votes:
+        if (message.sender not in self._votes) and(message.data["response"]==True) :
             self._votes[message.sender] = message
             # print("message_sender: ", message.sender)
             if (len(self._votes.keys()) > (self._server._total_nodes - 1) / 2):
@@ -69,8 +70,9 @@ class Candidate(object):
             #     self._send_response_message(message, yes=False)
             #     return self, None
 
-            # if (_type == BaseMessage.AppendEntries):
-            #     return self.on_append_entries(message)
+            if (_type == BaseMessage.AppendEntries):
+                state = Follower()
+                self._server._state = state
             # elif (_type == BaseMessage.RequestVote):
             #     a = self.on_vote_request(message)
             #     return a

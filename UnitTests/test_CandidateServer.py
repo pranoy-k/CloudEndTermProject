@@ -1,5 +1,7 @@
 import unittest
-
+import sys
+sys.path.append('C:\\Users\\wangr\\Documents\\Python Scripts\\CloudEndTermProject')
+print(sys.path)
 from Raft.servers.server import Server
 from Raft.states.follower import Follower
 from Raft.states.candidate import Candidate

@@ -14,6 +14,7 @@ class Leader(object):
     def __init__(self):
         self._nextIndexes = defaultdict(int)
         self._matchIndex = defaultdict(int)
+        self._numofMessages = {}
 
     def set_server(self, server):
         self._server = server
@@ -122,3 +123,30 @@ class Leader(object):
             "currentTerm": self._server._currentTerm,
         })
         self._server.send_message_response(response)
+    
+    def run_client_command(self, message):
+        print ("running client command")
+        term = self._server._currentTerm
+        value = message._data["command"]
+        log = {"term": term, "value": value}
+        self._server._lastLogIndex = len(self._server._log) - 1
+        self._server._lastLogTerm = term
+        if self._server._lastLogIndex > -1:
+            self._server._lastLogTerm = self._server._log[self._server._lastLogIndex]["term"]
+        self._server._log.append(log)
+        for n in self._server._neighbors:
+            self._numofMessages[n._name] = 1
+
+        message = Message(
+            self._server._name,
+            None,
+            self._server._currentTerm,
+            {
+                "leaderId": self._server._name,
+                "prevLogIndex": self._server._lastLogIndex,
+                "prevLogTerm": self._server._lastLogTerm,
+                "entries": [log],
+                "leaderCommit": self._server._commitIndex,
+            }, Message.AppendEntries)
+        self._server.send_message(message)
+        return self, None

@@ -1,6 +1,8 @@
 import zmq
 import threading
-
+from Raft.states.leader import Leader
+from Raft.states.follower import Follower
+from Raft.messages.client_message import ClientMessage
 # (1, state, [], board, [self.oserver])
 
 
@@ -54,6 +56,20 @@ class Server(object):
         state, response = self._state.on_message(message)
 
         self._state = state
+    
+    def send_data(self, message_data):
+        """This is called when there is a client request."""
+        leader = None
+        leaderTerm = None
+        for n in self._neighbors:
+            if type(n._state) == Leader:
+                leader = n._name
+                leaderTerm = n._currentTerm
+        message = ClientMessage(self._name, leader, leaderTerm, {"command": message_data})
+        if leader != None:
+            self.send_message_response(message)
+        else:
+            self._state.run_client_command(message)
 
 
 # class ZeroMQServer(Server):

@@ -6,7 +6,7 @@ class BaseMessage(object):
     RequestVote = 1
     RequestVoteResponse = 2
     Response = 3
-
+    Client = 4
     def __init__(self, sender, receiver, term, data):
         self._timestamp = int(time.time())
 

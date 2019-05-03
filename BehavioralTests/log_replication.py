@@ -1,4 +1,7 @@
 from __future__ import print_function
+import sys
+sys.path.append('C:\\Users\\wangr\\Documents\\Python Scripts\\CloudEndTermProject')
+print(sys.path)
 """
 Behavioral Test for Leader Election
 """
@@ -8,7 +11,6 @@ import time
 import threading
 
 from threading import Thread
-
 from Raft.servers.server import Server
 from Raft.states.follower import Follower
 from Raft.states.candidate import Candidate
@@ -49,12 +51,25 @@ def serverFunction(name):
             if time.time()-timeoutTime >0.5:
                 server._state._send_heart_beat()
                 timeoutTime = time.time()+0.5
+        
 
         ## For time out of follower to become candidate
         if type(server._state) == Follower:
             if time.time() >= server._state._timeoutTime:
                 server._state = Candidate()
                 server._state.set_server(server)
+
+def clientfunction():
+    global followers
+    time.sleep(10)
+    print('*********************************************')
+    for i in range(1,10):
+        for t in range(0,len(followers)):
+            if type(followers[t]._state) == Leader:
+                message_data = "the number now is"+str(i)
+                followers[1].send_data(message_data)
+                print("the message has been sent")
+        time.sleep(1)
 
 
 print("\n\nCreating four servers with names ranging from 0-3")
@@ -90,16 +105,16 @@ sender_id = 4
 message_data = "Hello"
 state = Client()
 client = Server(sender_id, state, [], [])
-
+thread = Thread(target=clientfunction, args=())
 ## Find th leader and its term
-leader = None
-leaderTerm = None
-for n in followers:
-    if type(n._state) == Leader:
-        leader = n._name
-        leaderTerm = n._currentTerm
-message = BaseMessage(client._name, leader, leaderTerm, {
-    "command": message_data})
+thread.start()
+# leader = None
+# leaderTerm = None
+# for n in followers:
+#     if type(n._state) == Leader:
+#         leader = n._name
+#         leaderTerm = n._currentTerm
+# message = BaseMessage(client._name, leader, leaderTerm, {
+#     "command": message_data})
 
 
-client._state.send_data(message_data, leader)
