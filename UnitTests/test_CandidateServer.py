@@ -1,8 +1,5 @@
 import unittest
 
-# from Raft.boards.memory_board import MemoryBoard
-from Raft.messages.append_entries import AppendEntriesMessage
-from Raft.messages.request_vote import RequestVoteMessage
 from Raft.servers.server import Server
 from Raft.states.follower import Follower
 from Raft.states.candidate import Candidate

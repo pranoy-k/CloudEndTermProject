@@ -1,12 +1,14 @@
 from __future__ import print_function
 from collections import defaultdict
-# from Raft.states.state import State
-from Raft.messages.append_entries import AppendEntriesMessage
+
 import time
 import random
+import threading
+
+from Raft.messages.append_entries import AppendEntriesMessage
 from Raft.messages.base import BaseMessage
 from Raft.messages.response import ResponseMessage
-from Raft.messages.request_vote import RequestVoteResponseMessage
+
 class Leader(object):
 
     def __init__(self):
@@ -15,6 +17,7 @@ class Leader(object):
 
     def set_server(self, server):
         self._server = server
+        print("\nLeader", server._name, "got selected.\n")
         self._send_heart_beat()
         for n in self._server._neighbors:
             self._nextIndexes[n._name] = self._server._lastLogIndex + 1
@@ -67,7 +70,9 @@ class Leader(object):
                 "entries": [],
                 "leaderCommit": self._server._commitIndex,
             })
-        print("server", self._server._name, "sending the heartbeat")
+
+        print("\nServer", self._server._name, "sending the Heartbeat")
+
         self._server.send_message(message)
     
     def on_message(self, message):
