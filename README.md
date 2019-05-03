@@ -31,3 +31,10 @@ References:
 ==========
 * [In Search of an Understandable Consensus Algorithm](https://ramcloud.stanford.edu/wiki/download/attachments/11370504/raft.pdf)
 * [Raft Lecture](http://www.youtube.com/watch?v=YbZ3zDzDnrw)
+* [Safty and Liveness](https://container-solutions.com/raft-explained-part-33-safety-liveness-guarantees-conclusion/)
+* [Raft Simulation Cartoon](https://www.youtube.com/watch?v=xieqo3Tb5LQ)
+* [Raft Consensus Algorithm](https://medium.com/@amangoeliitb/raft-consensus-algorithm-d93e7ee22b12)
+* [Paxos and Raft](https://blockonomi.com/paxos-raft-consensus-protocols/)
+* [Paxos & Raft Video](https://www.youtube.com/watch?v=Hm5LAxKxrD8)
+* [Leader Election and Log Replication](https://www.youtube.com/watch?v=Bxm4FG4Nvs0)
+
