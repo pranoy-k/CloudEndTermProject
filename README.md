@@ -21,9 +21,12 @@ It consists of three directories
 
 This implementation is completed in Python.
 
-nose==1.3.0 (nose extends the test loading and running features of unittest, making it easier to write, find and run tests.)
-pyzmq==14.3.1 (This package contains Python bindings for ØMQ. ØMQ is a lightweight and fast messaging implementation.)
-wsgiref==0.1.2 (A reference implementation of the WSGI specification that can be used to add WSGI support to a web server or framework.)
+- nose==1.3.0 
+  - nose extends the test loading and running features of unittest, making it easier to write, find and run tests.
+- pyzmq==14.3.1 
+  - This package contains Python bindings for ØMQ. ØMQ is a lightweight and fast messaging implementation.
+- wsgiref==0.1.2 
+  - A reference implementation of the WSGI specification that can be used to add WSGI support to a web server or framework.
 
 
 References:
