@@ -1,5 +1,6 @@
 import unittest
-
+import sys
+sys.path.append('C:\\Users\\Kexin Cui\\Desktop\\CloudEndTermProject')
 # from Raft.boards.memory_board import MemoryBoard
 from Raft.messages.append_entries import AppendEntriesMessage
 from Raft.messages.request_vote import RequestVoteMessage
@@ -8,65 +9,28 @@ from Raft.states.follower import Follower
 
 
 class TestFollowerServer(unittest.TestCase):
-
+    ### Doing the initial setup for tests ##########
     def setUp(self):
-        # board = MemoryBoard()
         state = Follower()
-        ## name, state, log, messageBoard, neighbors
         self.oserver = Server(0, state, [], [])
 
-        # board = MemoryBoard()
         state = Follower()
         self.server = Server(1, state, [], [self.oserver])
 
-    ## Heartbeat Message Processing
+    ## Unit test to send heartbeart message to neighbours ################
     def test_follower_server_on_message(self):
-        msg = AppendEntriesMessage(0, 1, 2, {})
-        self.server.on_message(msg)
+        input_message = AppendEntriesMessage(0, 1, 10, {})
+        self.server.on_message(input_message)
+        self.assertEquals(10, self.server._currentTerm)
 
-        self.assertEquals(2, self.server._currentTerm)
+    ## Unit test to reject message with lesser term ###########
     def test_follower_server_on_receive_message_with_lesser_term(self):
-        msg = AppendEntriesMessage(0, 1, -1, {})
-
-        self.server.on_message(msg)
-
+        input_message = AppendEntriesMessage(0, 1, -1, {})
+        self.server.on_message(input_message)
         self.assertEquals(False, self.oserver.get_message().data["response"])
-    def test_follower_server_on_receive_message_with_greater_term(self):
-        msg = AppendEntriesMessage(0, 1, 2, {})
 
-        self.server.on_message(msg)
-
-        self.assertEquals(2, self.server._currentTerm)
-
-    ## Log MessageProcessing
-    def test_follower_server_on_receive_message_where_log_does_not_have_prevLogTerm(self):
-        self.server._log.append({"term": 100, "value": 2000})
-        msg = AppendEntriesMessage(0, 1, 2, {
-            "prevLogIndex": 0,
-            "prevLogTerm": 1,
-            "leaderCommit": 1,
-            "entries": [{"term": 1, "value": 100}]})
-
-        self.server.on_message(msg)
-
-        self.assertEquals(False, self.oserver.get_message().data["response"])
-        self.assertEquals([], self.server._log)
-    def test_follower_server_on_receive_message_where_log_contains_conflicting_entry_at_new_index(self):
-        self.server._log.append({"term": 1, "value": 0})
-        self.server._log.append({"term": 1, "value": 200})
-        self.server._log.append({"term": 1, "value": 300})
-        self.server._log.append({"term": 2, "value": 400})
-
-        msg = AppendEntriesMessage(0, 1, 2, {
-            "prevLogIndex": 0,
-            "prevLogTerm": 1,
-            "leaderCommit": 1,
-            "entries": [{"term": 1, "value": 100}]})
-
-        self.server.on_message(msg)
-        self.assertEquals({"term": 1, "value": 100}, self.server._log[1])
-        self.assertEquals([{"term": 1, "value": 0}, {"term": 1, "value": 100}], self.server._log)
-    def test_follower_server_on_receive_message_where_log_is_empty_and_receives_its_first_value(self):
+    #### Unit test to append log to an initial empty log##################
+    def test_follower_server_on_receiving_message_to_empty_logs(self):
         msg = AppendEntriesMessage(0, 1, 2, {
             "prevLogIndex": 0,
             "prevLogTerm": 100,
@@ -76,24 +40,12 @@ class TestFollowerServer(unittest.TestCase):
         self.server.on_message(msg)
         self.assertEquals({"term": 1, "value": 100}, self.server._log[0])
 
-    ## Electing Message Processing
-    def test_follower_server_on_receive_vote_request_message(self):
+    ## Unit test to test if follower is receiving message from candidate ######
+    def test_follower_server_on_receive_request_for_voting(self):
         msg = RequestVoteMessage(0, 1, 2, {"lastLogIndex": 0, "lastLogTerm": 0, "entries": []})
-
         self.server.on_message(msg)
-
         self.assertEquals(0, self.server._state._last_vote)
         self.assertEquals(True, self.oserver.get_message().data["response"])
-    def test_follower_server_on_receive_vote_request_after_sending_a_vote(self):
-        msg = RequestVoteMessage(0, 1, 2, {"lastLogIndex": 0, "lastLogTerm": 0, "entries": []})
-
-        self.server.on_message(msg)
-
-        msg = RequestVoteMessage(2, 1, 2, {})
-        self.server.on_message(msg)
-
-        self.assertEquals(0, self.server._state._last_vote)
-
 
 if __name__ == '__main__':
     unittest.main()

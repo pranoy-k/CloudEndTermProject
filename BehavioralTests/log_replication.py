@@ -1,7 +1,7 @@
 from __future__ import print_function
-import sys
-sys.path.append('C:\\Users\\wangr\\Documents\\Python Scripts\\CloudEndTermProject')
-print(sys.path)
+# import sys
+# sys.path.append('C:\\Users\\Kexin Cui\\Desktop\\CloudEndTermProject')
+# print(sys.path)
 """
 Behavioral Test for Leader Election
 """
