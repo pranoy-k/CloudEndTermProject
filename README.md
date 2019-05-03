@@ -11,12 +11,15 @@ It consists of three directories
   - messages
   - servers
   - states
+  
 - UnitTests
   - test_CandidateServer.py
   - test_LeaderServer.py
   - test_FollowerServer.py
+  
 - BehavioralTests
   - LeaderElection.py
+    - During a leader election, the RequestVote RPC also contains information about the candidate’s log(like term number) to figure out which one is the latest. If the candidate requesting the vote has less updated data than the Follower from which it is requesting vote, the Follower simply doesn’t vote for the said candidate. The following excerpt from the original Raft paper clears it in a similar and profound way.
   - LogReplication.py
     - Each request made by the client is stored in the Logs of the Leader. This log is then replicated to other nodes(Followers).
     - A log entry contains: 
