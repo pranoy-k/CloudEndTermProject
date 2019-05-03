@@ -18,6 +18,7 @@ It consists of three directories
 - BehavioralTests
   - LeaderElection.py
   - LogReplication.py
+    - Each request made by the client is stored in the Logs of the Leader. This log is then replicated to other nodes(Followers).
 
 ## Dependencies
 
