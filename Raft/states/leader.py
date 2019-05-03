@@ -4,11 +4,14 @@ from collections import defaultdict
 from Raft.messages.append_entries import AppendEntriesMessage
 import time
 import random
+import locker
 from Raft.messages.base import BaseMessage
 from Raft.messages.response import ResponseMessage
 from Raft.messages.request_vote import RequestVoteResponseMessage
+from threading import Thread
+# global lock
 class Leader(object):
-
+    
     def __init__(self):
         self._nextIndexes = defaultdict(int)
         self._matchIndex = defaultdict(int)
@@ -56,6 +59,7 @@ class Leader(object):
         return self, None
 
     def _send_heart_beat(self):
+        # global lock
         message = AppendEntriesMessage(
             self._server._name,
             None,
@@ -67,7 +71,9 @@ class Leader(object):
                 "entries": [],
                 "leaderCommit": self._server._commitIndex,
             })
+        locker.lock.acquire
         print("server", self._server._name, "sending the heartbeat")
+        locker.lock.release
         self._server.send_message(message)
     
     def on_message(self, message):

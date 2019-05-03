@@ -4,11 +4,11 @@ import random
 from Raft.messages.request_vote import RequestVoteResponseMessage
 from Raft.messages.base import BaseMessage
 from Raft.messages.response import ResponseMessage
-
-
-
+from threading import Thread
+import locker
+# global lock
 class Follower(object):
-
+    
     def __init__(self,timeout = 8):  # time is in sec NOT millisec. 500 origin
         self._last_vote = None
         self._timeout = timeout
@@ -107,8 +107,9 @@ class Follower(object):
         that this state reacts to.
 
         """
+        # global lock
         _type = message.type
-
+        locker.lock.acquire
         if _type == 0:
             print("Server", self._server._name,"received", "AppendEntries")
         elif _type == 1:
@@ -117,7 +118,7 @@ class Follower(object):
             print("Server", self._server._name,"received", "RequestVoteResponse")
         elif _type == 3:
             print("Server", self._server._name,"received", "Response")
-
+        locker.lock.release
         if (message.term > self._server._currentTerm):
             self._server._currentTerm = message.term
         # Is the messages.term < ours? If so we need to tell

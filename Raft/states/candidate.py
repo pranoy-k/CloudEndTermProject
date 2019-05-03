@@ -3,11 +3,14 @@ from Raft.states.leader import Leader
 from Raft.messages.request_vote import RequestVoteMessage
 import time
 import random
+import locker
 from Raft.messages.request_vote import RequestVoteResponseMessage
 from Raft.messages.base import BaseMessage
 from Raft.messages.response import ResponseMessage
-
+from threading import Thread
+# global lock
 class Candidate(object):
+    
     def __init__(self,timeout = 5):  # time is in sec NOT millisec. 500 origin
         self._last_vote = None
         self._timeout = timeout
@@ -35,9 +38,12 @@ class Candidate(object):
         return self, None
 
     def _start_election(self):
+        # global lock
         self._server._currentTerm += 1
+        locker.lock.acquire
         print("Server", self._server._name, " times out and then becomes a candidate!!")
         print("It starts the Election with term ", self._server._currentTerm,"!!! \n")
+        locker.lock.release
         election = RequestVoteMessage(
             self._server._name,
             None,

@@ -6,7 +6,7 @@ import time
 import threading
 
 from threading import Thread
-
+from Raft.states import locker
 # from Raft.boards.memory_board import MemoryBoard
 from Raft.messages.append_entries import AppendEntriesMessage
 from Raft.messages.request_vote import RequestVoteMessage
@@ -15,16 +15,16 @@ from Raft.states.follower import Follower
 from Raft.states.candidate import Candidate
 from Raft.states.leader import Leader
 
-lock = threading.Lock()
+# lock = threading.Lock()
 
 def checkMesages():
     i = 0
     while(True):
         time.sleep(0.0001)
         if i % 10000 == 0:
-            lock.acquire()
+            locker.lock.acquire()
             print('.')
-            lock.release()
+            locker.lock.release()
         for name in range(len(followers)):
             while(True):
                 message = followers[name].get_message()
@@ -104,7 +104,9 @@ for name in range(4):
     followers.append(server)
     thread = Thread(target=serverFunction, args=(name,))
     thread.start()
+    locker.lock.acquire
     print ("Started server with name ", name)
+    locker.lock.release
 print("\nWait until first timer timesout")
 
 
