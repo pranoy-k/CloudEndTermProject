@@ -1,4 +1,4 @@
-import sys
+from __future__ import print_function
 
 """
 Behavioral Test for Leader Election
@@ -62,15 +62,13 @@ def serverFunction(name):
                 server._state = Candidate()
                 server._state.set_server(server)
                 timestart = time.time()
-                print("timestart:", timestart)
         ## Leader Sending Heartbeat
         if type(server._state) == Leader:
             leader_doesnot_exist = False
             timeend = time.time()
             election_time = timeend - timestart
             time.sleep(1)
-            print("timeend:", timeend)
-            print("the election time is", election_time)
+            print("The time for leader to get elected is", str(election_time*1000)[:7], "seconds")
             break
             # if time.time()-timeoutTime >0.5:
             #     server._state._send_heart_beat()
@@ -79,11 +77,12 @@ def serverFunction(name):
     # print(name,"has been killed")
 
 
-print("\n\nCreating four servers with names ranging from 0-3")
 
-# Create Servers
-followers = []
-for exp_num in range(2, 4):
+## Running experiment with different number of servers each time
+for exp_num in range(2, 6):
+    print('.'*100)
+    print("\nRunning experiment with", exp_num, "servers\n.\n.\n.\n")
+    followers = []
     thread = []
     leader_doesnot_exist = True
     for name in range(exp_num):
@@ -102,7 +101,7 @@ for exp_num in range(2, 4):
         followers.append(server)
         thread.append(Thread(target=serverFunction, args=(name,)))
         thread[name].start()
-        print ("Started server with name ", name)
+        print ("Started server with name:", name)
     print("\nWait until first timer timesout")
 
     thread.append(Thread(target=checkMesages, args=()))

@@ -19,7 +19,7 @@ class Leader(object):
     def set_server(self, server):
         self._server = server
         print("\nLeader", server._name, "got selected.\n")
-        self._send_heart_beat()
+        # self._send_heart_beat()
         for n in self._server._neighbors:
             self._nextIndexes[n._name] = self._server._lastLogIndex + 1
             self._matchIndex[n._name] = 0

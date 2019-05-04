@@ -16,6 +16,7 @@ from Raft.states.leader import Leader
 
 lock = threading.Lock()
 
+## Thread for constantly checking the messages for all servers
 def checkMesages():
     i = 0
     while(True):
