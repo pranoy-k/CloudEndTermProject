@@ -31,7 +31,6 @@ class Follower(object):
             # print("##########################")
             log = self._server._log
             data = message.data
-
             # Check if the leader is too far ahead in the log.
             if (data["leaderCommit"] != self._server._commitIndex):
                 # If the leader is too far ahead then we
@@ -88,8 +87,10 @@ class Follower(object):
                     #   commitIndex = len(log)
                     #   Is this a heartbeat?
                     if (len(data["entries"]) > 0):
+                        
                         for e in data["entries"]:
                             log.append(e)
+                            print("log appendded")
                             self._server._commitIndex += 1
 
                         self._server._lastLogIndex = len(log) - 1

@@ -137,7 +137,7 @@ class Leader(object):
         for n in self._server._neighbors:
             self._numofMessages[n._name] = 1
 
-        message = Message(
+        message = AppendEntriesMessage(
             self._server._name,
             None,
             self._server._currentTerm,
@@ -147,6 +147,6 @@ class Leader(object):
                 "prevLogTerm": self._server._lastLogTerm,
                 "entries": [log],
                 "leaderCommit": self._server._commitIndex,
-            }, Message.AppendEntries)
+            })
         self._server.send_message(message)
         return self, None
