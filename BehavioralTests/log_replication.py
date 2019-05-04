@@ -1,6 +1,6 @@
 from __future__ import print_function
 """
-Behavioral Test for Leader Election
+Behavioral Test for Log Replication
 """
 
 ## Importing all the required libraries
