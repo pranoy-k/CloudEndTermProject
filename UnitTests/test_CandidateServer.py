@@ -1,6 +1,5 @@
 import unittest
-import sys
-sys.path.append('C:\\Users\\Kexin Cui\\Desktop\\CloudEndTermProject')
+
 from Raft.servers.server import Server
 from Raft.states.follower import Follower
 from Raft.states.candidate import Candidate

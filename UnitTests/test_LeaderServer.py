@@ -1,11 +1,8 @@
 import unittest
-import sys
-sys.path.append('C:\\Users\\Kexin Cui\\Desktop\\CloudEndTermProject')
+
 from Raft.states.leader import Leader
-from Raft.states.candidate import Candidate
 from Raft.states.follower import Follower
 from Raft.servers.server import Server
-from Raft.messages.request_vote import RequestVoteMessage
 from Raft.messages.append_entries import AppendEntriesMessage
 
 class TestLeaderServer(unittest.TestCase):

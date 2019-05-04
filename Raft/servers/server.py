@@ -1,4 +1,3 @@
-import zmq
 import threading
 from Raft.states.leader import Leader
 from Raft.states.follower import Follower

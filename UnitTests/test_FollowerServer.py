@@ -1,7 +1,5 @@
 import unittest
-import sys
-sys.path.append('C:\\Users\\Kexin Cui\\Desktop\\CloudEndTermProject')
-# from Raft.boards.memory_board import MemoryBoard
+
 from Raft.messages.append_entries import AppendEntriesMessage
 from Raft.messages.request_vote import RequestVoteMessage
 from Raft.servers.server import Server
