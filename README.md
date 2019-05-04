@@ -36,15 +36,16 @@ Make sure you are in the raftConsensus directory
 
 #### How to unit Test
 **For Testing the Follower, Candidate and Leader**
-> python -m UnitTests.test_FollowerServer.py
-> python -m UnitTests.test_CandidateServer.py
-> python -m UnitTests.test_LeaderServer.py
-
+```python -m UnitTests.test_FollowerServer.py
+   python -m UnitTests.test_CandidateServer.py
+   python -m UnitTests.test_LeaderServer.py
+```
 #### How to behavioral Test
 For testing leader election and log replication
-> python -m BehavioralTests.leader_election
-> python -m BehavioralTests.log_replication
-
+```
+  python -m BehavioralTests.leader_election
+  python -m BehavioralTests.log_replication
+```
 ## Dependencies
 
 This implementation is completed in Python.
