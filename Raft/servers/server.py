@@ -61,6 +61,7 @@ class Server(object):
                 leader = n._name
                 leaderTerm = n._currentTerm
         message = ClientMessage(self._name, leader, leaderTerm, {"command": message_data})
+        # print("message data is ", message_data)
         if leader != None:
             self.send_message_response(message)
         else:
