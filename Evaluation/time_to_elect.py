@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 """
-Behavioral Test for Leader Election
+Evaluation for measuring the time for leader election
 """
 
 ## Importing all the required libraries

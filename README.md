@@ -36,9 +36,10 @@ Make sure you are in the raftConsensus directory
 
 #### How to unit Test
 **For Testing the Follower, Candidate and Leader**
-```python -m UnitTests.test_FollowerServer.py
-   python -m UnitTests.test_CandidateServer.py
-   python -m UnitTests.test_LeaderServer.py
+```
+   python -m UnitTests.test_FollowerServer
+   python -m UnitTests.test_CandidateServer
+   python -m UnitTests.test_LeaderServer
 ```
 #### How to behavioral Test
 For testing leader election and log replication
@@ -46,6 +47,12 @@ For testing leader election and log replication
   python -m BehavioralTests.leader_election
   python -m BehavioralTests.log_replication
 ```
+#### How to evaluate for leader election time
+For testing leader election and log replication
+```
+  python -m Evaluation.time_to_elect
+```
+
 ## Dependencies
 
 This implementation is completed in Python.
@@ -56,6 +63,10 @@ This implementation is completed in Python.
   - This package contains Python bindings for ØMQ. ØMQ is a lightweight and fast messaging implementation.
 - wsgiref==0.1.2 
   - A reference implementation of the WSGI specification that can be used to add WSGI support to a web server or framework.
+
+## Work in Progess 
+
+> We are working on evaluting the time for log replication
 
 
 References:
