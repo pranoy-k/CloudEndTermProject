@@ -41,8 +41,8 @@ def checkMesages():
                     #     followers[name]._state.on_message(message)
                     # except (AttributeError,IndexError):
                     #     followers[name].post_message(message)
-                   
-                    
+
+
         i += 1
 
 ## Function associated with each server
@@ -50,7 +50,7 @@ def serverFunction(name):
     global followers
     server = followers[name]
     timeoutTime = time.time()+1
-    global timestart 
+    global timestart
     global timeend
     while not(reach_consensus):
 
@@ -59,15 +59,15 @@ def serverFunction(name):
             if time.time()-timeoutTime >0.5:
                 server._state._send_heart_beat()
                 timeoutTime = time.time()+0.5
-        
+
 
         ## For time out of follower to become candidate
         if type(server._state) == Follower:
             if time.time() >= server._state._timeoutTime:
                 server._state = Candidate()
                 server._state.set_server(server)
-                
-            
+
+
 
 def clientfunction():
     global timestart
@@ -77,7 +77,7 @@ def clientfunction():
     # for i in range(1,10):
     for t in range(0,len(followers)):
         if type(followers[t]._state) == Leader:
-            message_data = "Hello" 
+            message_data = "Hello"
             followers[1].send_data(message_data)
             timestart = time.time()
             print("the message\""+ message_data +"\" has been sent")
@@ -122,17 +122,17 @@ while not(reach_consensus):
     # print("The number of server who recieve the message is" ,snum_receive_message)
     if snum_receive_message == len(followers):
         timeend = time.time()
-        consensus_time = timeend-timestart  
+        consensus_time = timeend-timestart
         reach_consensus = True
         time.sleep(1)
         print ("the time to make consensus is ", consensus_time)
     # print("snum_receive_message is", snum_receive_message)
     snum_receive_message = 0
-    
 
 
 
-    
+
+
 
 # leader = None
 # leaderTerm = None
@@ -142,5 +142,3 @@ while not(reach_consensus):
 #         leaderTerm = n._currentTerm
 # message = BaseMessage(client._name, leader, leaderTerm, {
 #     "command": message_data})
-
-

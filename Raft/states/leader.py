@@ -1,7 +1,4 @@
 from __future__ import print_function
-import sys
-sys.path.append('C:\\Users\\wangr\\Documents\\Python Scripts\\CloudEndTermProject')
-print(sys.path)
 from collections import defaultdict
 
 import time
@@ -95,8 +92,8 @@ class Leader(object):
         #     self._send_response_message(message, yes=False)
         #     return self, None
 
-        if (_type == BaseMessage.Client):
-            return self.run_client_command(message)
+        # if (_type == BaseMessage.AppendEntries):
+        #     return self.on_append_entries(message)
         # elif (_type == BaseMessage.RequestVote):
         #     a = self.on_vote_request(message)
         #     return a
@@ -140,7 +137,7 @@ class Leader(object):
         for n in self._server._neighbors:
             self._numofMessages[n._name] = 1
 
-        message = AppendEntriesMessage(
+        message = Message(
             self._server._name,
             None,
             self._server._currentTerm,
@@ -148,9 +145,8 @@ class Leader(object):
                 "leaderId": self._server._name,
                 "prevLogIndex": self._server._lastLogIndex,
                 "prevLogTerm": self._server._lastLogTerm,
-                "entries": log,
+                "entries": [log],
                 "leaderCommit": self._server._commitIndex,
-            })
-        # print("log message is",log)
+            }, Message.AppendEntries)
         self._server.send_message(message)
         return self, None

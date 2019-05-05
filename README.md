@@ -47,6 +47,12 @@ For testing leader election and log replication
   python -m BehavioralTests.leader_election
   python -m BehavioralTests.log_replication
 ```
+#### How to evaluate for leader election time
+For testing leader election and log replication
+```
+  python -m Evaluation.time_to_elect
+```
+
 ## Dependencies
 
 This implementation is completed in Python.
@@ -57,6 +63,10 @@ This implementation is completed in Python.
   - This package contains Python bindings for ØMQ. ØMQ is a lightweight and fast messaging implementation.
 - wsgiref==0.1.2 
   - A reference implementation of the WSGI specification that can be used to add WSGI support to a web server or framework.
+
+## Work in Progess 
+
+> We are working on evaluting the time for log replication
 
 
 References:

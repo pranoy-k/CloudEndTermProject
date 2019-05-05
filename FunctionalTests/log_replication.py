@@ -12,7 +12,7 @@ from Raft.servers.server import Server
 from Raft.states.follower import Follower
 from Raft.states.candidate import Candidate
 from Raft.states.leader import Leader
-from Raft.states.client import Client
+
 from Raft.messages.base import BaseMessage
 
 lock = threading.Lock()
@@ -100,8 +100,6 @@ thread.start()
 ## Create Sender
 sender_id = 4
 message_data = "Hello"
-state = Client()
-client = Server(sender_id, state, [], [])
 thread = Thread(target=clientfunction, args=())
 ## Find th leader and its term
 thread.start()
